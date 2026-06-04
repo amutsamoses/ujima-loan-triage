@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ujima SACCO — AI Loan Triage System</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&f[]=cabinet-grotesk@800,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">🦁</div>
+      <div class="logo-text-wrap">
+        <span class="logo-name">UJIMA SACCO</span>
+        <span class="logo-sub">AI Loan Triage · Kenya DPA 2022</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="live-dot"></span>
+      <span class="live-label">SYSTEM LIVE</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-pill">🌍 AI Safari Capstone 2026 · FinSoko</div>
+    <h1 class="hero-title">
+      Scout. Screen.<br />
+      <span class="hero-accent">Decide with dignity.</span>
+    </h1>
+    <p class="hero-body">
+      A three-agent pride orchestrating loan triage for informal traders —
+      rooted in harvest cycles, SACCO culture, and conscience.
+    </p>
+  </section>
+
+  <!-- AGENT CARDS -->
+  <section class="agents-section">
+    <div class="agent-card scout" id="card-scout">
+      <div class="agent-icon">🔭</div>
+      <div class="agent-name scout-color">Scout Agent</div>
+      <div class="agent-desc">Financial literacy coach. Detects stress signals. Educates members on harvest-cycle budgeting via SMS.</div>
+      <div class="agent-limit">Max 3 SMS/day · Kill switch *#700#</div>
+    </div>
+    <div class="agent-card guardian" id="card-guardian">
+      <div class="agent-icon">🛡️</div>
+      <div class="agent-name guardian-color">Guardian Agent</div>
+      <div class="agent-desc">Tier-1 loan screening. Approves clean applications up to KES 15,000. Escalates complex cases with full context.</div>
+      <div class="agent-limit">Max KES 15,000 · Kill switch *#733#</div>
+    </div>
+    <div class="agent-card hunter" id="card-hunter">
+      <div class="agent-icon">🎯</div>
+      <div class="agent-name hunter-color">Hunter Agent</div>
+      <div class="agent-desc">Human-in-loop coordinator. Prepares briefing packets for loan officers. Never approves or denies alone.</div>
+      <div class="agent-limit">Coordinates humans only · Kill switch *#799#</div>
+    </div>
+  </section>
+
+  <!-- HANDOFF FLOW BAR -->
+  <section class="handoff-section">
+    <div class="handoff-inner">
+      <div class="handoff-step">
+        <div class="handoff-num">01</div>
+        <div class="handoff-name scout-color">🔭 Scout</div>
+        <div class="handoff-trigger">Detects stress signal</div>
+      </div>
+      <div class="handoff-arrow">→</div>
+      <div class="handoff-step">
+        <div class="handoff-num">02</div>
+        <div class="handoff-name guardian-color">🛡️ Guardian</div>
+        <div class="handoff-trigger">Screens & scores</div>
+      </div>
+      <div class="handoff-arrow">→</div>
+      <div class="handoff-step">
+        <div class="handoff-num">03</div>
+        <div class="handoff-name hunter-color">🎯 Hunter</div>
+        <div class="handoff-trigger">Briefs human officer</div>
+      </div>
+      <div class="handoff-arrow">→</div>
+      <div class="handoff-step">
+        <div class="handoff-num">04</div>
+        <div class="handoff-name" style="color:#555;">👤 Officer</div>
+        <div class="handoff-trigger">Final decision</div>
+      </div>
+    </div>
+    <div class="handoff-track">
+      <div class="handoff-fill" id="handoff-fill"></div>
+    </div>
+  </section>
+
+  <!-- MAIN GRID -->
+  <main class="main-grid">
+
+    <!-- LEFT: APPLICATION FORM -->
+    <div class="panel form-panel">
+      <h2 class="panel-title">📋 New Loan Application</h2>
+
+      <!-- Member preview card -->
+      <div class="member-preview" id="member-preview">
+        <div class="preview-name" id="preview-name">—</div>
+        <div class="preview-tags" id="preview-tags"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Member Name</label>
+        <input type="text" id="name" placeholder="e.g. Grace Akinyi" oninput="updatePreview()" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Occupation</label>
+        <select id="occupation" onchange="updatePreview()">
+          <option value="">Select occupation</option>
+          <option value="Maize Farmer">Maize Farmer</option>
+          <option value="Market Vendor">Market Vendor</option>
+          <option value="Shea Butter Trader">Shea Butter Trader</option>
+          <option value="Bodaboda Operator">Bodaboda Operator</option>
+          <option value="Formal Employee">Formal Employee</option>
+          <option value="Jua Kali Artisan">Jua Kali Artisan</option>
+          <option value="Chama Member">Chama Member</option>
+          <option value="Tea Farmer">Tea Farmer</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Loan Amount (KES)</label>
+        <input type="number" id="amount" placeholder="e.g. 25000" oninput="updatePreview()" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Children Under 5</label>
+          <select id="children" onchange="updatePreview()">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Harvest Alignment</label>
+          <select id="harvest" onchange="updatePreview()">
+            <option value="Aligned">Aligned ✓</option>
+            <option value="Misaligned">Misaligned ✗</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Financial Stress Signal</label>
+        <select id="stress" onchange="updatePreview()">
+          <option value="No">No</option>
+          <option value="Yes">Yes — mentioned school fees / debt / shylock</option>
+        </select>
+      </div>
+
+      <button class="submit-btn" onclick="triageApplication()">
+        🚀 Submit to Agent Pride
+      </button>
+
+      <!-- Result -->
+      <div id="result" class="result-panel" style="display:none;"></div>
+
+      <!-- PRIDE Loop banner -->
+      <div class="pride-banner" id="pride-banner" style="display:none;">
+        <h4>⚖️ PRIDE Loop Activated</h4>
+        <p>Loan exceeds KES 50,000 — mandatory human review. Pause Point P engaged. Elders Council notified. No AI decision will be made on this application.</p>
+      </div>
+
+      <!-- Dignity Filter -->
+      <div class="dignity-panel" id="dignity-panel" style="display:none;">
+        <div class="panel-title" style="margin-bottom:12px;">🛡️ Dignity Filter</div>
+        <div class="dignity-before" id="dignity-before"></div>
+        <div class="dignity-after" id="dignity-after"></div>
+      </div>
+
+      <!-- Bias Alert -->
+      <div class="bias-alert" id="bias-alert" style="display:none;">
+        <div class="bias-alert-title">⚠️ GUARD: Bias Pattern Detected</div>
+        <div class="bias-alert-text" id="bias-alert-text"></div>
+      </div>
+
+      <!-- OCEAN Verification -->
+      <div class="ocean-panel" id="ocean-panel" style="display:none;">
+        <div class="panel-title" style="margin-bottom:12px;">🌊 OCEAN Verification — AI Self-Audit</div>
+        <div id="ocean-steps"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: STATS + CALENDAR + GENERATIONAL -->
+    <div class="right-column">
+
+      <!-- Live Stats -->
+      <div class="panel">
+        <h2 class="panel-title">📊 Live System Stats</h2>
+        <div class="stat-big" id="total-count">0</div>
+        <div class="stat-label">Applications Processed</div>
+
+        <div class="stat-grid">
+          <div class="stat-mini approved">
+            <div class="stat-mini-val" id="approved-count">0</div>
+            <div class="stat-mini-label">Approved</div>
+          </div>
+          <div class="stat-mini review">
+            <div class="stat-mini-val" id="hunter-count">0</div>
+            <div class="stat-mini-label">Human Review</div>
+          </div>
+          <div class="stat-mini flagged">
+            <div class="stat-mini-val" id="scout-count">0</div>
+            <div class="stat-mini-label">Scout Flagged</div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Approval Rate</span><span id="approval-pct">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill green" id="approval-bar" style="width:0%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Female Vendor Approval</span><span id="female-pct">—</span></div>
+          <div class="progress-bar"><div class="progress-fill blue" id="female-bar" style="width:0%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Harvest-Aligned</span><span id="harvest-pct">0%</span></div>
+          <div class="progress-bar"><div class="progress-fill gold" id="harvest-bar" style="width:0%"></div></div>
+        </div>
+
+        <div class="impact-rows">
+          <div class="impact-row">
+            <span class="impact-key">Bias Incidents</span>
+            <span class="impact-val green-text" id="bias-count">0 detected</span>
+          </div>
+          <div class="impact-row">
+            <span class="impact-key">Data Sovereignty</span>
+            <span class="impact-val gold-text">100% AWS Africa</span>
+          </div>
+          <div class="impact-row">
+            <span class="impact-key">DPA 2022 Compliance</span>
+            <span class="impact-val green-text">✓ Active</span>
+          </div>
+          <div class="impact-row">
+            <span class="impact-key">Dignity Violations</span>
+            <span class="impact-val green-text" id="dignity-count">0 this session</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Harvest Calendar -->
+      <div class="panel">
+        <h2 class="panel-title">🌾 Harvest Calendar — Repayment Alignment</h2>
+        <div class="harvest-cal" id="harvest-cal"></div>
+        <div class="cal-legend">
+          <div class="cal-legend-item"><div class="cal-dot gold-bg"></div><span>Peak Harvest</span></div>
+          <div class="cal-legend-item"><div class="cal-dot green-bg"></div><span>Repayment Window</span></div>
+          <div class="cal-legend-item"><div class="cal-dot grey-bg"></div><span>Low Income</span></div>
+        </div>
+      </div>
+
+      <!-- Generational Impact -->
+      <div class="panel">
+        <h2 class="panel-title">🌍 Generational Impact Projection</h2>
+        <div class="gen-grid">
+          <div class="gen-card g1">
+            <div class="gen-year">Generation 1 · 2026</div>
+            <div class="gen-title g1-color">Current Members</div>
+            <div class="gen-text">37% more female vendors access credit. Default rate drops below 3%. Predatory shylocks lose market share in Western Kenya.</div>
+            <div class="gen-counter g1-color">+<span id="gen1-count">0</span> lives impacted</div>
+          </div>
+          <div class="gen-card g2">
+            <div class="gen-year">Generation 2 · 2040</div>
+            <div class="gen-title g2-color">Their Children</div>
+            <div class="gen-text">Children stay in school through harvest season. First-generation university students emerge from previously credit-excluded households.</div>
+            <div class="gen-counter g2-color">+<span id="gen2-count">0</span> students projected</div>
+          </div>
+          <div class="gen-card g3">
+            <div class="gen-year">Generation 3 · 2055</div>
+            <div class="gen-title g3-color">Grandchildren</div>
+            <div class="gen-text">Wealth accumulation shifts. Families with two generations of SACCO credit access own land, run businesses, employ neighbors.</div>
+            <div class="gen-counter g3-color">KES <span id="gen3-count">0</span>M wealth created</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- APPLICATION LOG -->
+  <section class="log-section">
+    <div class="panel log-panel">
+      <h2 class="panel-title">📁 Application Log — Agent Decision Trail</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>App ID</th>
+              <th>Member</th>
+              <th>Occupation</th>
+              <th>Amount (KES)</th>
+              <th>Risk Score</th>
+              <th>Agent Decision</th>
+              <th>Reasoning</th>
+            </tr>
+          </thead>
+          <tbody id="log-body">
+            <tr>
+              <td colspan="7">
+                <div class="empty-state">
+                  <div class="empty-icon">🦁</div>
+                  <div>No applications yet. The pride is waiting.</div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">🦁 Ujima SACCO AI Triage · AI Safari Capstone 2026</div>
+    <div class="footer-badges">
+      <span class="footer-badge">Kenya <strong>DPA 2022</strong></span>
+      <span class="footer-badge">AWS Africa <strong>Cape Town</strong></span>
+      <span class="footer-badge">SASRA <strong>Aligned</strong></span>
+      <span class="footer-badge">GUARD <strong>Active</strong></span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
