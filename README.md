@@ -1,4 +1,4 @@
-# 🦁 Ujima SACCO — AI Loan Triage System
+# 🦁 Ujima SACCO AI Loan Triage System
 
 > Ethical AI for informal traders. Built for the people the old system forgot.
 
@@ -11,7 +11,7 @@
 
 ## What This Is
 
-Ujima SACCO AI Triage is a frontend web application that simulates an ethical, multi-agent loan screening system designed for informal traders in East Africa — maize farmers, market vendors, bodaboda operators, chama members — people who have historically been excluded from formal credit access because the models were never built with them in mind.
+Ujima SACCO AI Triage is a frontend web application that simulates an ethical, multi-agent loan screening system designed for informal traders in East Africa maize farmers, market vendors, bodaboda operators, chama members people who have historically been excluded from formal credit access because the models were never built with them in mind.
 
 The system routes loan applications through a three-agent pride: **Scout → Guardian → Hunter**, each with defined authority limits, kill switches, and human oversight built in at every escalation point.
 
